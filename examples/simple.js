@@ -11,15 +11,20 @@ var n = 2000;
 
 // simulate N fake http
 // requests to upload an image,
-// resize, and transfer to s3
+// resize, and transfer to s3.
 
 while (n--) {
   // faux http upload
   var now = Date.now();
   trace.start('request', now);
 
+
   // image resizing
   trace.start('resize', now += Math.random() * 100);
+
+  // update db in parallel
+  trace.start('save', now);
+  trace.end('save', now + 50);
 
   // transfer to s3
   trace.start('s3', now);
