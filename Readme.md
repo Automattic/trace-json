@@ -3,7 +3,7 @@
 
   Distributed tracing library inspired by [zipkin](https://github.com/twitter/zipkin).
 
-  ![](http://s7.postimage.org/bifvc8mix/trace.png)
+  ![](http://i47.tinypic.com/vzvedu.png)
 
 ## Graphing
 
