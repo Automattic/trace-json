@@ -17,5 +17,9 @@ program
 // bind
 
 var addr = 'tcp://localhost:5555';
-server.bind(addr);
-console.log('bound to %s', addr);
+server.sub.bind(addr);
+console.log('sub bound to %s', addr);
+
+var addr = 'tcp://localhost:5556';
+server.rep.bind(addr);
+console.log('rep bound to %s', addr);
