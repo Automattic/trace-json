@@ -11,12 +11,12 @@
   aspect of this request/response cycled may be "traced" for inspection.
 
 ```js
-var Trace = require('traces');
+var Cycle = require('traces');
 var http = require('http');
 
 var id = 0;
 http.createServer(function(){
-  var trace = new Trace('upload', id++);
+  var trace = new Cycle('upload', id++);
 
   // request comes in, start streaming data
   trace.start('request', Date.now());
@@ -50,16 +50,16 @@ http.createServer(function(){
 
   Fetch all traces for `cycle` and invoke `fn(err, traces)`.
 
-### Tracer()
+### Cycle(id, name)
 
   Initialize a new Tracer with the given `id`
-  and `cycle` name.
+  and `name`.
 
-### Tracer#start(type:String, date:Number|Date)
+### Cycle#start(type:String, date:Number|Date)
 
   Trace start of `type` with `date`.
 
-### Tracer#end(type:String, date:Number|Date)
+### Cycle#end(type:String, date:Number|Date)
 
   Trace end of `type` with `date`.
 
