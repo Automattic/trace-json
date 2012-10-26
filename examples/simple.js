@@ -3,8 +3,9 @@
  * Module dependencies.
  */
 
-var trace = require('..');
+var Tracer = require('..');
 
-var n = 1000;
+var trace = new Tracer('123', 'req/res');
 
-trace.start('123', 'request / response', '')
+trace.start('request', Date.now());
+trace.end('request', Date.now() + 500);
