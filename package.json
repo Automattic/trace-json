@@ -1,5 +1,5 @@
 {
-  "name": "tracer",
+  "name": "traces",
   "version": "0.0.1",
   "description": "Distributed tracing library",
   "keywords": [
