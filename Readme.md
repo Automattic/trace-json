@@ -27,20 +27,20 @@ http.createServer(function(){
   var trace = new Cycle('upload', id++);
 
   // request comes in, start streaming data
-  trace.start('request', Date.now());
-  trace.start('upload', Date.now());
+  trace.start('request');
+  trace.start('upload');
 
   // upload complete
-  trace.end('upload', Date.now());
+  trace.end('upload');
 
   // resize
-  trace.start('resize', Date.now());
+  trace.start('resize');
 
   // resize complete
-  trace.end('resize', Date.now());
+  trace.end('resize');
 
   // respond
-  trace.end('request', Date.now());
+  trace.end('request');
 })
 ```
 
