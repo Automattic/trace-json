@@ -3,7 +3,7 @@
 
   Distributed tracing library inspired by [zipkin](https://github.com/twitter/zipkin).
 
-  ![](http://f.cl.ly/items/2c0R3G3W3g1g0s3b2c2u/traces.png)
+  ![](https://www.evernote.com/shard/s58/sh/394f1f98-0218-4664-b381-3c36935ddaf9/5fd606569479a032856ea48e7766276c/res/f45e931b-fe0b-4ea1-acc5-dca2aa1b1ede/skitch.png)
 
 ## Graphing
 
