@@ -5,8 +5,7 @@
 
 var Tracer = require('..');
 
-var trace = new Tracer('req/res', '123');
-
+var id = 0;
 var n = 500;
 
 // simulate N fake http
@@ -16,7 +15,8 @@ var n = 500;
 next();
 
 function next() {
-  --n || process.exit();
+  if (!--n) return done();
+  var trace = new Tracer('req/res', id++);
 
   // faux http upload
   var now = Date.now();
@@ -40,4 +40,13 @@ function next() {
   trace.end('request', now + 50);
 
   process.nextTick(next);
+}
+
+function done() {
+  var start = new Date;
+  Tracer.get('req/res', function(err, traces){
+    console.log(new Date - start);
+    console.log(traces);
+    process.exit(0);
+  });
 }
