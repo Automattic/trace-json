@@ -44,6 +44,10 @@ http.createServer(function(){
 })
 ```
 
+## trace(1)
+
+  The `trace(1)` executable is provided with this module, and serves as the in-memory "database" from which your nodes converse via [axon](http://github.com/visionmedia/axon). In the future persistence via pluggable stores may be supported.
+
 ## API
 
 ### exports#clearAll([fn]:Function)
