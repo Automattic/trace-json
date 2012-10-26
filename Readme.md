@@ -1,7 +1,34 @@
 
 # tracer
 
-  Distributed tracing library
+  Distributed tracing library inspired by [zipkin](https://github.com/twitter/zipkin).
+
+## API
+
+### exports#clearAll([fn]:Function)
+
+  Clear all results collected.
+
+### exports#clear(cycle:String, [fn]:Function)
+
+  Clear results collected for `cycle`.
+
+### exports#get(cycle:String, fn:Function)
+
+  Fetch all traces for `cycle` and invoke `fn(err, traces)`.
+
+### Tracer()
+
+  Initialize a new Tracer with the given `id`
+  and `cycle` name.
+
+### Tracer#start(type:String, date:Number|Date)
+
+  Trace start of `type` with `date`.
+
+### Tracer#end(type:String, date:Number|Date)
+
+  Trace end of `type` with `date`.
 
 ## License 
 
