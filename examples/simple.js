@@ -46,7 +46,7 @@ function done() {
   var start = new Date;
   Tracer.get('req/res', function(err, traces){
     console.log(new Date - start);
-    console.log(traces);
+    console.log(JSON.stringify(traces, null, 2));
     process.exit(0);
   });
 }
