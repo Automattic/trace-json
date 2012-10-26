@@ -37,7 +37,7 @@ function next() {
   trace.end('resize', now += Math.random() * 50 | 0);
 
   // response flushed
-  trace.end('request', now + 50 | 0);
+  trace.end('request', now + 50);
 
   process.nextTick(next);
 }
