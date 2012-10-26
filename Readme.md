@@ -3,6 +3,8 @@
 
   Distributed tracing library inspired by [zipkin](https://github.com/twitter/zipkin).
 
+  ![](http://f.cl.ly/items/0b150W2D0x0R2D0P3D3a/traces.png)
+
 ## About
 
   Traces works by collecting "cycles", which consist of one or more trace
@@ -37,6 +39,10 @@ http.createServer(function(){
   trace.end('request', Date.now());
 })
 ```
+
+## Graphing
+
+  The graph on this page was generated with [traces-graph](https://github.com/LearnBoost/traces-graph).
 
 ## API
 
