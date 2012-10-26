@@ -1,2 +1,2 @@
 
-module.exports = require('./lib/tracer');
+module.exports = require('./client');

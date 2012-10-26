@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var server = require('../lib/server')
+  , program = require('commander')
+  , pkg = require('../package');
+
+// options
+
+program
+  .version(pkg.version)
+  .parse(process.argv);
+
