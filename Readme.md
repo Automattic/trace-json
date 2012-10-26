@@ -96,13 +96,13 @@ http.createServer(function(){
   Initialize a new Tracer with the given `id`
   and `name`.
 
-### Cycle#start(type:String, date:Number|Date)
+### Cycle#start(type:String, [date]:Number|Date)
 
-  Trace start of `type` with `date`.
+  Trace start of `type` with optional `date`.
 
-### Cycle#end(type:String, date:Number|Date)
+### Cycle#end(type:String, [date]:Number|Date)
 
-  Trace end of `type` with `date`.
+  Trace end of `type` with optional `date`.
 
 ## License 
 
