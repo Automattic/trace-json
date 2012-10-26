@@ -19,12 +19,12 @@
   allowing traces cross-process.
 
 ```js
-var Cycle = require('traces');
+var cycle = require('traces');
 var http = require('http');
 
 var id = 0;
 http.createServer(function(){
-  var trace = new Cycle('upload', id++);
+  var trace = cycle('upload', id++);
 
   // request comes in, start streaming data
   trace.start('request');
