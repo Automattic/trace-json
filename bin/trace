@@ -12,5 +12,10 @@ var server = require('../lib/server')
 
 program
   .version(pkg.version)
+  .option('-a, --addr <addr>', 'bind to the given <addr> [tcp://localhost:5555]', 'tcp://localhost:5555')
   .parse(process.argv);
 
+// bind
+
+server.bind(program.addr);
+console.log('bound to %s', program.addr);
