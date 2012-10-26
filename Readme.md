@@ -8,7 +8,9 @@
   Traces works by collecting "cycles", which consist of one or more trace
   calls enabling you to report on the durations of any given subset of a cycle. For
   example an image upload "cycle" may look something like the following, where each
-  aspect of this request/response cycled may be "traced" for inspection.
+  aspect of this request/response cycled may be "traced" for inspection. Because of
+  this association each `Cycle` must have its own "id", which may be unique identifier,
+  allowing traces cross-process.
 
 ```js
 var Cycle = require('traces');
@@ -49,6 +51,35 @@ http.createServer(function(){
 ### exports#get(cycle:String, fn:Function)
 
   Fetch all traces for `cycle` and invoke `fn(err, traces)`.
+
+  The json returned is formatted as follows, keyed by the cycle id.
+
+```json
+{
+  "0": {
+    "probes": {
+      "request": {
+        "start": 1351270875180,
+        "end": 1351270875396
+      },
+      "resize": {
+        "start": 1351270875257,
+        "end": 1351270875346
+      },
+      "save": {
+        "start": 1351270875257,
+        "end": 1351270875307
+      },
+      "s3": {
+        "start": 1351270875257,
+        "end": 1351270875312
+      }
+    }
+  },
+  "1": {
+    "probes": {
+  ...
+```
 
 ### Cycle(id, name)
 
