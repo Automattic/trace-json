@@ -7,17 +7,20 @@ var Tracer = require('..');
 
 var trace = new Tracer('req/res', '123');
 
-var n = 2000;
+var n = 500;
 
 // simulate N fake http
 // requests to upload an image,
 // resize, and transfer to s3.
 
-while (n--) {
+next();
+
+function next() {
+  --n || process.exit();
+
   // faux http upload
   var now = Date.now();
   trace.start('request', now);
-
 
   // image resizing
   trace.start('resize', now += Math.random() * 100);
@@ -35,4 +38,6 @@ while (n--) {
 
   // response flushed
   trace.end('request', now + 50);
+
+  process.nextTick(next);
 }
