@@ -23,7 +23,7 @@ function next() {
   trace.start('request', now);
 
   // image resizing
-  trace.start('resize', now += Math.random() * 100);
+  trace.start('resize', now += Math.random() * 100 | 0);
 
   // update db in parallel
   trace.start('save', now);
@@ -31,13 +31,13 @@ function next() {
 
   // transfer to s3
   trace.start('s3', now);
-  trace.end('s3', now += Math.random() * 100);
+  trace.end('s3', now += Math.random() * 100 | 0);
 
   // resize complete
-  trace.end('resize', now += Math.random() * 50);
+  trace.end('resize', now += Math.random() * 50 | 0);
 
   // response flushed
-  trace.end('request', now + 50);
+  trace.end('request', now + 50 | 0);
 
   process.nextTick(next);
 }
