@@ -5,6 +5,10 @@
 
   ![](http://f.cl.ly/items/0b150W2D0x0R2D0P3D3a/traces.png)
 
+## Graphing
+
+  This modules includes no graphing functionality, however the image on this page was generated with [traces-graph](https://github.com/LearnBoost/traces-graph). By using `traces.get(cycle)` you can generate your own reports.
+
 ## About
 
   Traces works by collecting "cycles", which consist of one or more trace
@@ -39,10 +43,6 @@ http.createServer(function(){
   trace.end('request', Date.now());
 })
 ```
-
-## Graphing
-
-  The graph on this page was generated with [traces-graph](https://github.com/LearnBoost/traces-graph).
 
 ## API
 
