@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var Tracer = require('..');
+var Trace = require('..');
 
 var id = 0;
 var n = 500;
@@ -16,7 +16,7 @@ next();
 
 function next() {
   if (!--n) return done();
-  var trace = new Tracer('req/res', id++);
+  var trace = new Trace('req/res', id++);
 
   // faux http upload
   var now = Date.now();
@@ -44,7 +44,7 @@ function next() {
 
 function done() {
   var start = new Date;
-  Tracer.get('req/res', function(err, traces){
+  Trace.get('req/res', function(err, traces){
     console.log(new Date - start);
     console.log(JSON.stringify(traces, null, 2));
     process.exit(0);

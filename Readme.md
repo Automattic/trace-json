@@ -1,7 +1,40 @@
 
-# tracer
+# traces
 
   Distributed tracing library inspired by [zipkin](https://github.com/twitter/zipkin).
+
+## About
+
+  Traces works by collecting "cycles", which consist of one or more trace
+  calls enabling you to report on the durations of any given subset of a cycle. For
+  example an image upload "cycle" may look something like the following, where each
+  aspect of this request/response cycled may be "traced" for inspection.
+
+```js
+var Trace = require('traces');
+var http = require('http');
+
+var id = 0;
+http.createServer(function(){
+  var trace = new Trace('upload', id++);
+
+  // request comes in, start streaming data
+  trace.start('request', Date.now());
+  trace.start('upload', Date.now());
+
+  // upload complete
+  trace.end('upload', Date.now());
+
+  // resize
+  trace.start('resize', Date.now());
+
+  // resize complete
+  trace.end('resize', Date.now());
+
+  // respond
+  trace.end('request', Date.now());
+})
+```
 
 ## API
 
