@@ -13,11 +13,13 @@ var n = 500;
 // requests to upload an image,
 // resize, and transfer to s3.
 
+// use $ TRACE=request
+
 next();
 
 function next() {
   if (!--n) return done();
-  var trace = new Cycle('req/res', id++);
+  var trace = new Cycle('request', id++);
 
   // faux http upload
   var now = Date.now();
@@ -45,7 +47,7 @@ function next() {
 
 function done() {
   var start = new Date;
-  traces.get('req/res', function(err, traces){
+  traces.get('request', function(err, traces){
     console.log(new Date - start);
     console.log(JSON.stringify(traces, null, 2));
     process.exit(0);
