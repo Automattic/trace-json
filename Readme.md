@@ -48,6 +48,14 @@ http.createServer(function(){
 
   The `trace(1)` executable is provided with this module, and serves as the in-memory "database" from which your nodes converse via [axon](http://github.com/visionmedia/axon). In the future persistence via pluggable stores may be supported.
 
+## Enabling probes
+
+  To enable a cycle you may use the __TRACE__ environment variable. For example
+  to enable all probes simply use `TRACE="*"`, to enable only chat related cycles
+  use `TRACE=chat`, for several use spaces or commas `TRACE="chat request"`,
+  `TRACE=chat,request`. You may also use wildcards such as `TRACE=chat:*`,
+  and negation via `TRACE="* -chat"` to say "everything except chat".
+
 ## API
 
 ### exports#clearAll([fn]:Function)
