@@ -14,6 +14,10 @@ program
   .version(pkg.version)
   .parse(process.argv);
 
+// title
+
+process.title = 'trace';
+
 // bind
 
 var addr = 'tcp://localhost:5555';
