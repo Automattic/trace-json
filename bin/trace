@@ -25,7 +25,9 @@ process.title = 'trace';
 if (program.get) {
   return client.get(program.get, function(err, data){
     if (err) throw err;
-    process.stdout.write(JSON.stringify(data, null, 2));
+    process.stdout.write(JSON.stringify(data, null, 2), function(){
+      process.exit(1);
+    });
   });
 }
 
