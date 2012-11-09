@@ -1,6 +1,6 @@
 {
   "name": "traces",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Distributed tracing library",
   "keywords": [
     "trace",
