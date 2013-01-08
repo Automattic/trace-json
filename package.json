@@ -11,7 +11,7 @@
   ],
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "dependencies": {
-    "axon": "0.4.5",
+    "axon": "*",
     "commander": "~1.0.5",
     "debug": "~0.7.0"
   },
