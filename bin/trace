@@ -5,6 +5,7 @@
  */
 
 var server = require('../lib/server')
+  , client = require('../lib/client')
   , program = require('commander')
   , pkg = require('../package');
 
@@ -12,11 +13,23 @@ var server = require('../lib/server')
 
 program
   .version(pkg.version)
+  .option('-g, --get <cycle>', 'get data for <cycle>')
   .parse(process.argv);
 
 // title
 
 process.title = 'trace';
+
+// --get <cycle>
+
+if (program.get) {
+  return client.get(program.get, function(err, data){
+    if (err) throw err;
+    process.stdout.write(JSON.stringify(data, null, 2), function(){
+      process.exit(1);
+    });
+  });
+}
 
 // bind
 
