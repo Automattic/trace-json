@@ -13,6 +13,7 @@ var server = require('../lib/server')
 
 program
   .version(pkg.version)
+  .option('-a, --addr <addr>', 'bind address [0.0.0.0]', '0.0.0.0')
   .option('-g, --get <cycle>', 'get data for <cycle>')
   .parse(process.argv);
 
@@ -33,10 +34,10 @@ if (program.get) {
 
 // bind
 
-var addr = 'tcp://localhost:5555';
+var addr = 'tcp://' + program.addr + ':5555';
 server.sub.bind(addr);
 console.log('sub bound to %s', addr);
 
-var addr = 'tcp://localhost:5556';
+var addr = 'tcp://' + program.addr + ':5556';
 server.rep.bind(addr);
 console.log('rep bound to %s', addr);
