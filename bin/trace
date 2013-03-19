@@ -15,6 +15,7 @@ program
   .version(pkg.version)
   .option('-a, --addr <addr>', 'bind address [0.0.0.0]', '0.0.0.0')
   .option('-g, --get <cycle>', 'get data for <cycle>')
+  .option('--clear-all', 'clear all traces')
   .parse(process.argv);
 
 // title
@@ -27,8 +28,17 @@ if (program.get) {
   return client.get(program.get, function(err, data){
     if (err) throw err;
     process.stdout.write(JSON.stringify(data, null, 2), function(){
-      process.exit(1);
+      process.exit(0);
     });
+  });
+}
+
+// --clear-all
+
+if (program.clearAll) {
+  return client.clearAll(function(err){
+    if (err) throw err;
+    process.exit(0);
   });
 }
 
