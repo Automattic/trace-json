@@ -16,6 +16,7 @@ var server = require('../lib/server')
 program
   .version(pkg.version)
   .option('-a, --addr <addr>', 'bind address [0.0.0.0]', '0.0.0.0')
+  .option('-c, --cycles', 'list cycles')
   .option('-g, --get <cycle>', 'get data for <cycle>')
   .option('-s, --stats <cycle>', 'get stats for <cycle>')
   .option('-S, --json-stats <cycle>', 'get json stats for <cycle>')
@@ -26,6 +27,17 @@ program
 
 process.title = 'trace';
 
+// --cycles
+
+if (program.cycles) {
+  return client.cycles(function(err, names){
+    if (err) throw err;
+    names.forEach(function(name){
+      console.log(name);
+    });
+    process.exit(0);
+  });
+}
 
 // --json-stats <cycle>
 
