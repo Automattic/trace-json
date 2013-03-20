@@ -7,7 +7,8 @@
 var server = require('../lib/server')
   , client = require('../lib/client')
   , program = require('commander')
-  , pkg = require('../package');
+  , pkg = require('../package')
+  , ms = require('ms');
 
 // options
 
@@ -15,12 +16,28 @@ program
   .version(pkg.version)
   .option('-a, --addr <addr>', 'bind address [0.0.0.0]', '0.0.0.0')
   .option('-g, --get <cycle>', 'get data for <cycle>')
+  .option('-s, --stats <cycle>', 'get stats for <cycle>')
   .option('--clear-all', 'clear all traces')
   .parse(process.argv);
 
 // title
 
 process.title = 'trace';
+
+// --stats <cycle>
+
+if (program.stats) {
+  return client.stats(program.stats, function(err, stats){
+    if (err) throw err;
+    for (var name in stats.probes) {
+      console.log('  %s', name);
+      for (var metric in stats.probes[name]) {
+        var val = stats.probes[name][metric];
+        console.log('    %s : %s', metric, ms(val));
+      }
+    }
+  });
+}
 
 // --get <cycle>
 
