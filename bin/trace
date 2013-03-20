@@ -16,10 +16,9 @@ var server = require('../lib/server')
 program
   .version(pkg.version)
   .option('-a, --addr <addr>', 'bind address [0.0.0.0]', '0.0.0.0')
-  .option('-c, --cycles', 'list cycles')
-  .option('-g, --get <cycle>', 'get data for <cycle>')
-  .option('-s, --stats <cycle>', 'get stats for <cycle>')
-  .option('-S, --json-stats <cycle>', 'get json stats for <cycle>')
+  .option('-l, --cycles', 'list cycles')
+  .option('-c, --cycle <cycle>', 'get <cycle>')
+  .option('-j, --json', 'output json')
   .option('--clear-all', 'clear all traces')
   .parse(process.argv);
 
@@ -27,11 +26,21 @@ program
 
 process.title = 'trace';
 
+/**
+ * JSON helper.
+ */
+
+function json(obj) {
+  console.log(JSON.stringify(obj, null, 2));
+  process.exit(0);
+}
+
 // --cycles
 
 if (program.cycles) {
   return client.cycles(function(err, names){
     if (err) throw err;
+    if (program.json) return json(names);
     names.forEach(function(name){
       console.log(name);
     });
@@ -39,21 +48,17 @@ if (program.cycles) {
   });
 }
 
-// --json-stats <cycle>
+// --cycle <cycle>
 
-if (program.jsonStats) {
-  return client.stats(program.jsonStats, function(err, stats){
-    if (err) throw err;
-    console.log(JSON.stringify(stats, null, 2));
-    process.exit(0);
-  });
-}
+if (program.cycle) {
+  if (program.json) {
+    return client.get(program.cycle, function(err, data){
+      if (err) throw err;
+      json(data);
+    });
+  }
 
-// --stats <cycle>
-
-if (program.stats) {
-  return client.stats(program.stats, function(err, stats){
-    if (err) throw err;
+  return client.stats(program.cycle, function(err, stats){
     for (var name in stats.probes) {
       console.log();
       console.log(s('  \033[36m%13s\033[0m', name));
@@ -64,17 +69,6 @@ if (program.stats) {
     }
     console.log();
     process.exit(0);
-  });
-}
-
-// --get <cycle>
-
-if (program.get) {
-  return client.get(program.get, function(err, data){
-    if (err) throw err;
-    process.stdout.write(JSON.stringify(data, null, 2), function(){
-      process.exit(0);
-    });
   });
 }
 
