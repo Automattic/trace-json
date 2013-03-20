@@ -36,6 +36,7 @@ if (program.stats) {
         console.log('    %s : %s', metric, ms(val));
       }
     }
+    process.exit(0);
   });
 }
 
