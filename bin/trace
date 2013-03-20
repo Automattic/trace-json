@@ -8,6 +8,7 @@ var server = require('../lib/server')
   , client = require('../lib/client')
   , program = require('commander')
   , pkg = require('../package')
+  , s = require('printf')
   , ms = require('ms');
 
 // options
@@ -30,12 +31,14 @@ if (program.stats) {
   return client.stats(program.stats, function(err, stats){
     if (err) throw err;
     for (var name in stats.probes) {
-      console.log('  %s', name);
+      console.log();
+      console.log(s('  \033[36m%13s\033[0m', name));
       for (var metric in stats.probes[name]) {
         var val = stats.probes[name][metric];
-        console.log('    %s : %s', metric, ms(val));
+        console.log(s('    \033[90m%10s:\033[0m %s', metric, ms(val)));
       }
     }
+    console.log();
     process.exit(0);
   });
 }
