@@ -18,12 +18,24 @@ program
   .option('-a, --addr <addr>', 'bind address [0.0.0.0]', '0.0.0.0')
   .option('-g, --get <cycle>', 'get data for <cycle>')
   .option('-s, --stats <cycle>', 'get stats for <cycle>')
+  .option('-S, --json-stats <cycle>', 'get json stats for <cycle>')
   .option('--clear-all', 'clear all traces')
   .parse(process.argv);
 
 // title
 
 process.title = 'trace';
+
+
+// --json-stats <cycle>
+
+if (program.jsonStats) {
+  return client.stats(program.jsonStats, function(err, stats){
+    if (err) throw err;
+    console.log(JSON.stringify(stats, null, 2));
+    process.exit(0);
+  });
+}
 
 // --stats <cycle>
 
