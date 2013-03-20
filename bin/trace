@@ -16,7 +16,7 @@ var server = require('../lib/server')
 program
   .version(pkg.version)
   .option('-a, --addr <addr>', 'bind address [0.0.0.0]', '0.0.0.0')
-  .option('-l, --cycles', 'list cycles')
+  .option('-l, --cycles', 'list cycle names')
   .option('-c, --cycle <cycle>', 'get <cycle>')
   .option('-j, --json', 'output json')
   .option('--clear-all', 'clear all traces')
