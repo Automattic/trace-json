@@ -17,7 +17,8 @@ program
   .version(pkg.version)
   .option('-a, --addr <addr>', 'bind address [0.0.0.0]', '0.0.0.0')
   .option('-l, --cycles', 'list cycle names')
-  .option('-c, --cycle <cycle>', 'get <cycle>')
+  .option('-c, --cycle <cycle>', 'get cycle stats')
+  .option('-g, --get <cycle>', 'output cycle json')
   .option('-j, --json', 'output json')
   .option('--clear-all', 'clear all traces')
   .parse(process.argv);
@@ -33,6 +34,15 @@ process.title = 'trace';
 function json(obj) {
   console.log(JSON.stringify(obj, null, 2));
   process.exit(0);
+}
+
+// --get <cycle>
+
+if (program.get) {
+  return client.get(program.get, function(err, data){
+    if (err) throw err;
+    json(data);
+  });
 }
 
 // --cycles
@@ -51,14 +61,8 @@ if (program.cycles) {
 // --cycle <cycle>
 
 if (program.cycle) {
-  if (program.json) {
-    return client.get(program.cycle, function(err, data){
-      if (err) throw err;
-      json(data);
-    });
-  }
-
   return client.stats(program.cycle, function(err, stats){
+    if (program.json) return json(stats.probes);
     for (var name in stats.probes) {
       console.log();
       console.log(s('  \033[36m%13s\033[0m', name));
