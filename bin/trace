@@ -8,6 +8,7 @@ var server = require('../lib/server')
   , client = require('../lib/client')
   , program = require('commander')
   , pkg = require('../package')
+  , bytes = require('bytes')
   , s = require('printf')
   , ms = require('ms');
 
@@ -20,12 +21,25 @@ program
   .option('-c, --cycle <cycle>', 'get cycle stats')
   .option('-g, --get <cycle>', 'output cycle json')
   .option('-j, --json', 'output json')
+  .option('-m, --max-rss <str>', 'max resident memory usage [100mb]', '100mb')
   .option('--clear-all', 'clear all traces')
   .parse(process.argv);
 
 // title
 
 process.title = 'trace';
+
+// memory check
+
+var max = bytes(program.maxRss);
+
+setInterval(function(){
+  var used = process.memoryUsage().rss;
+  if (used > max) {
+    console.log('max memory of %s exceeded (%s), exiting', bytes(max), bytes(used));
+    process.exit(2);
+  }
+}, 60000);
 
 /**
  * JSON helper.
