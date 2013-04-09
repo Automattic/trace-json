@@ -20,6 +20,7 @@ program
   .option('-l, --cycles', 'list cycle names')
   .option('-c, --cycle <cycle>', 'get cycle stats')
   .option('-g, --get <cycle>', 'output cycle json')
+  .option('-p, --probes <cycle>', 'inspect cycle probes')
   .option('-j, --json', 'output json')
   .option('-m, --max-rss <str>', 'max resident memory usage [100mb]', '100mb')
   .option('--clear-all', 'clear all traces')
@@ -48,6 +49,25 @@ setInterval(function(){
 function json(obj) {
   console.log(JSON.stringify(obj, null, 2));
   process.exit(0);
+}
+
+// --probes <cycle>
+
+if (program.probes) {
+  return client.get(program.probes, function(err, data){
+    for (var id in data) {
+      console.log();
+      var probes = data[id].probes;
+      for (var name in probes) {
+        var probe = probes[name];
+        var delta = probe.end - probe.start;
+        if (isNaN(delta)) continue;
+        console.log(s('  \033[36m%15s\033[m: %s', name, ms(delta)));
+      }
+    }
+    console.log();
+    process.exit();
+  });
 }
 
 // --get <cycle>
