@@ -102,7 +102,16 @@ if (program.cycle) {
       console.log(s('  \033[36m%13s\033[0m', name));
       for (var metric in stats.probes[name]) {
         var val = stats.probes[name][metric];
-        console.log(s('    \033[90m%10s:\033[0m %s', metric, 'count' == metric ? val : ms(val)));
+        switch (metric) {
+        	case 'count':
+        	case 'per day':
+        	case 'per hour':
+        	case 'per minute':
+		        console.log(s('    \033[90m%10s:\033[0m %s', metric, val));
+        		break;
+        	default:
+		        console.log(s('    \033[90m%10s:\033[0m %s', metric, ms(val)));
+        }
       }
     }
     console.log();
