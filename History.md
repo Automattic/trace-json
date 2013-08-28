@@ -1,4 +1,11 @@
 
+0.4.0 / 2013-08-28 
+==================
+
+ * add duration related stats
+ * add -p, --probes to inspect individual probes
+ * pin axon dep
+
 0.3.0 / 2013-04-01
 ==================
 
@@ -10,12 +17,4 @@
 
   * add --get cycle
   * add --json flag for json variants
-  * add --cycles to list names
-  * add stats
-  * add --clear-all
-  * add TRACE_ADDR
-
-0.1.4 / 2013-03-19
-==================
-
-  * add --addr <addr>
+  * add --
