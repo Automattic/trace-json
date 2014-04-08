@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var debug = require('debug')('traces');
+var debug = require('debug')('trace-json');
 var stats = require('./lib/stats');
 
 /**

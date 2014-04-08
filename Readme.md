@@ -1,5 +1,5 @@
 
-# traces
+# trace-json
 
   Distributed tracing library. Traces are really just a specialized form of
   `log` calls, therefore this module utilizes `Automattic/log-json` under
@@ -16,7 +16,7 @@
 
 ``` js
 var http = require('http');
-var cycle = require('traces');
+var cycle = require('trace-json');
 
 var id = 0;
 http.createServer(function(){
