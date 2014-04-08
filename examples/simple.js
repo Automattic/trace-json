@@ -46,10 +46,5 @@ function next() {
 }
 
 function done() {
-  var start = new Date;
-  traces.get('request', function(err, traces){
-    console.log(new Date - start);
-    console.log(JSON.stringify(traces, null, 2));
-    process.exit(0);
-  });
+  console.log('done!');
 }
