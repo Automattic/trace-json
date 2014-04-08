@@ -37,7 +37,7 @@ http.createServer(function(){
 
   // respond
   trace.end('request');
-})
+});
 ```
 
 ## Enabling probes
