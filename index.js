@@ -3,17 +3,15 @@
  * Module dependencies.
  */
 
-var axon = require('axon')
-  , debug = require('debug')('traces')
-  , stats = require('./stats')
-  , noop = function(){};
+var debug = require('debug')('traces');
+var stats = require('./lib/stats');
 
 /**
  * Enabled cycles.
  */
 
-var names = []
-var skips = []
+var names = [];
+var skips = [];
 var cache = {};
 
 (process.env.TRACE || '')
@@ -28,156 +26,10 @@ var cache = {};
   });
 
 /**
- * Trace address.
- */
-
-var addr = process.env.TRACE_ADDR || '0.0.0.0';
-
-/**
- * Shared socket.
- */
-
-var pub = axon.socket('push');
-pub.format('json');
-pub.connect('tcp://' + addr + ':5555');
-
-/**
- * Shared request socket.
- */
-
-var req = axon.socket('req');
-req.format('json');
-req.connect('tcp://' + addr + ':5556');
-
-/**
  * Expose `Cycle`.
  */
 
 exports = module.exports = Cycle;
-
-/**
- * Clear all results collected.
- *
- * @param {Function} [fn]
- * @api public
- */
-
-exports.clearAll = function(fn){
-  debug('clear all');
-  req.send({ type: 'clear all' }, fn || noop);
-};
-
-/**
- * Clear results collected for `cycle`.
- *
- * @param {String} cycle
- * @param {Function} [fn]
- * @api public
- */
-
-exports.clear = function(cycle, fn){
-  debug('clear %s', cycle);
-  req.send({ type: 'clear', cycle: cycle }, fn || noop);
-};
-
-/**
- * Get stats for `cycle` and invoke `fn(err, stats)`.
- *
- * @param {String} cycle
- * @param {Function} fn
- * @api public
- */
-
-exports.stats = function(cycle, fn){
-  exports.get(cycle, function(err, data){
-    if (err) return fn(err);
-
-    var per = {
-    	day: {},
-    	hour: {},
-    	minute: {}
-    };
-
-    // compute deltas
-    var probes = {};
-    for (var id in data) {
-      for (var name in data[id].probes) {
-        probes[name] = probes[name] || [];
-        var probe = data[id].probes[name];
-        var delta = probe.end - probe.start;
-        if (isNaN(delta)) continue;
-
-        var d = new Date(probe.end);
-
-        var key = d.getDate();
-        per.day[key] = per.day[key] || 0;
-        per.day[key]++;
-
-        var key = d.getDate() + ':' + d.getHours();
-        per.hour[key] = per.hour[key] || 0;
-        per.hour[key]++;
-
-        var key = d.getDate() + ':' + d.getHours() + ':' + d.getMinutes();
-        per.minute[key] = per.minute[key] || 0;
-        per.minute[key]++;
-
-        probes[name].push(delta);
-      }
-    }
-
-    // stats
-    var res = { probes: {}, data: {} };
-    for (var name in probes) {
-      var data = probes[name];
-
-      res.data[name] = data;
-
-      res.probes[name] = {
-        count: data.length,
-        total: stats.sum(data) | 0,
-        min: stats.min(data) | 0,
-        max: stats.max(data) | 0,
-        mean: stats.mean(data) | 0,
-        stddev: stats.stddev(data) | 0,
-        'per day': stats.meanValues(per.day) | 0,
-        'per hour': stats.meanValues(per.hour) | 0,
-        'per minute': stats.meanValues(per.minute) | 0
-      };
-    }
-
-    fn(null, res);
-  });
-};
-
-/**
- * Fetch cycle names and invoke `fn(err, names)`.
- *
- * @param {Function} fn
- * @api public
- */
-
-exports.cycles = function(fn){
-  debug('get cycles');
-  req.send({ type: 'get cycles' }, function(res){
-    fn(null, res);
-  });
-};
-
-/**
- * Fetch all traces for `cycle` and invoke `fn(err, traces)`.
- *
- * @param {String} cycle
- * @param {Function} fn
- * @api public
- */
-
-exports.get = function(cycle, fn){
-  debug('get %s', cycle);
-  if ('string' != typeof cycle) throw new TypeError('cycle required');
-  req.send({ type: 'get', cycle: cycle }, function(res){
-    fn(null, res);
-  });
-};
 
 /**
  * Initialize a new Cycle with the given `id` and `name`.
