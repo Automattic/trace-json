@@ -252,11 +252,11 @@ function enabled(name) {
 
   if (disabled) return cache[name] = false;
 
-  var enabled = names.some(function(re){
+  var isEnabled = names.some(function(re){
     return re.test(name);
   });
 
-  if (!enabled) return cache[name] = false;
+  if (!isEnabled) return cache[name] = false;
 
   return cache[name] = true;
 }
