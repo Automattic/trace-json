@@ -11,9 +11,7 @@
   ],
   "author": "Automattic, Inc.",
   "dependencies": {
-    "axon": "0.6.1",
-    "commander": "~1.0.5",
-    "debug": "~0.7.0",
+    "debug": "~0.8.0",
     "ms": "~0.6.0",
     "printf": "~0.1.1",
     "bytes": "~0.2.1"
