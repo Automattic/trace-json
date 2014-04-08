@@ -3,8 +3,10 @@
  * Module dependencies.
  */
 
-var debug = require('debug')('trace-json');
+var Log = require('log-json');
+var inherits = require('inherits');
 var stats = require('./lib/stats');
+var debug = require('debug')('trace-json');
 
 /**
  * Enabled cycles.
@@ -43,13 +45,12 @@ function Cycle(name, id) {
   if (!(this instanceof Cycle)) return new Cycle(name, id);
   if ('string' != typeof name) throw new TypeError('cycle name required');
   if (null == id) throw new TypeError('id required');
+  Log.call(this, 'trace-json');
   this.name = name;
   this.id = id;
-  if (!enabled(name)) {
-    this.start = function(){};
-    this.end = function(){};
-  }
+  this.enabled = enabled(name);
 }
+inherits(Cycle, Log);
 
 /**
  * Trace start of `type` with `date`.
@@ -61,7 +62,8 @@ function Cycle(name, id) {
 
 Cycle.prototype.start = function(type, date){
   debug('>> %s:%s', this.name, type);
-  pub.send({
+  if (!this.enabled) return;
+  this.info({
     id: this.id,
     cycle: this.name,
     type: type,
@@ -79,7 +81,8 @@ Cycle.prototype.start = function(type, date){
 
 Cycle.prototype.end = function(type, date){
   debug('<< %s:%s', this.name, type);
-  pub.send({
+  if (!this.enabled) return;
+  this.info({
     id: this.id,
     cycle: this.name,
     type: type,
