@@ -1,5 +1,5 @@
 
-0.4.0 / 2013-08-28 
+0.4.0 / 2013-08-28
 ==================
 
  * add duration related stats
@@ -17,4 +17,3 @@
 
   * add --get cycle
   * add --json flag for json variants
-  * add --
