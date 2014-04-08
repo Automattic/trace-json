@@ -1,4 +1,18 @@
 
+1.0.0 / 2014-04-08
+==================
+
+  * index: refactor to use `Automattic/log-json`
+  * traces -> trace-json
+  * index: remove the server-related calls and axon usage
+  * exmaples: remove traces.get() call in exmaple
+  * index: fix lint
+  * remove `trace(1)`
+  * Readme: simplify API
+  * package: remove "axon" and "commander" deps
+  * move client.js to index.js, remove server.js
+  * pacakge: rename to "trace-json", update "author"
+
 0.4.0 / 2013-08-28
 ==================
 
